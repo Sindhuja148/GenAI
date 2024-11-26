@@ -1,0 +1,19 @@
+-------Starting loading mnist Dataset!-------
+Training from scratch
+epsilon
+Model params: 15.89 M
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 5/5 [00:06<00:00,  1.37s/it, loss=0.902]
+Traceback (most recent call last):
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 363, in <module>
+    main()
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 356, in main
+    eval()
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 315, in eval
+    ckpt1 = torch.load(ckpt_path)['net_model']
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\serialization.py", line 986, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\serialization.py", line 435, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\serialization.py", line 416, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: './pth/1224_4T.pt'

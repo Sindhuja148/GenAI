@@ -61,23 +61,32 @@ def extract2(v, t, x_shape):
 #         return loss
         
 class GaussianDiffusionTrainer(nn.Module):
-    def __init__(self, model, beta_1, beta_T, T):
+    def __init__(self, model, beta_1, beta_T, T, exponential=False):
         super().__init__()
 
         self.model = model
         self.T = T
 
-        self.register_buffer(
-            'betas', torch.linspace(beta_1, beta_T, T).double())
+        if exponential:
+            # Generate exponentially spaced betas
+            beta_base = beta_T / beta_1  # Base for the exponential scale
+            self.register_buffer(
+                'betas', 
+                torch.tensor([beta_1 * (beta_base ** (t / (T - 1))) for t in range(T)]).double()
+            )
+        else:
+            # Generate linearly spaced betas
+            self.register_buffer(
+                'betas', torch.linspace(beta_1, beta_T, T).double()
+            )
+
         alphas = 1. - self.betas
         alphas_bar = torch.cumprod(alphas, dim=0)
 
-        # calculations for diffusion q(x_t | x_{t-1}) and others
-        self.register_buffer(
-            'sqrt_alphas_bar', torch.sqrt(alphas_bar))
-        self.register_buffer(
-            'sqrt_one_minus_alphas_bar', torch.sqrt(1. - alphas_bar))
-
+        # Precomputations for sampling
+        self.register_buffer('sqrt_alphas_bar', torch.sqrt(alphas_bar))
+        self.register_buffer('sqrt_one_minus_alphas_bar', torch.sqrt(1. - alphas_bar))
+        
     def forward(self, x_0):
         """
         Algorithm 1.
@@ -91,6 +100,8 @@ class GaussianDiffusionTrainer(nn.Module):
         #loss = F.mse_loss(self.model(x_t, t), noise, reduction='none')
         loss = F.mse_loss(self.model(x_t, t), noise, reduction='none')
         return loss
+
+
 
 
 class LatentGaussianDiffusionTrainer(nn.Module):

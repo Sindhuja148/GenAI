@@ -40,12 +40,15 @@ parser.add_argument('--img_size', default=32, type=int, help='image size')
 parser.add_argument('--dropout', default=0.1, type=float, help='dropout rate of resblock')
 parser.add_argument('--timestep', default=4, type=int, help='snn timestep')
 parser.add_argument('--img_ch', type=int, default=3, help='image channel')
+
 # Gaussian Diffusion
 parser.add_argument('--beta_1', default=1e-4, type=float, help='start beta value')
 parser.add_argument('--beta_T', default=0.02, type=float, help='end beta value')
 parser.add_argument('--T', default=1000, type=int, help='total diffusion steps')
 parser.add_argument('--mean_type', default='epsilon', help='predict variable:[xprev, xstart, epsilon]')
 parser.add_argument('--var_type', default='fixedlarge', help='variance type:[fixedlarge, fixedsmall]')
+parser.add_argument('--expo_schedule', action='store_true', default=False, help='To enable exponential Schedular')
+
 # Training
 parser.add_argument('--resume', default=False, help="load pre-trained model")
 parser.add_argument('--resume_model', type=str, help='resume model path')
@@ -198,11 +201,21 @@ def train():
         
 
     trainer = GaussianDiffusionTrainer(
-    net_model, float(args.beta_1), float(args.beta_T), args.T).to(device)
+    net_model, 
+    float(args.beta_1), 
+    float(args.beta_T), 
+    args.T, 
+    args.expo_schedule).to(device)
 
     net_sampler = GaussianDiffusionSampler(
-        net_model, float(args.beta_1), float(args.beta_T), args.T, args.img_size,
-        args.mean_type, args.var_type).to(device)
+    net_model, 
+    float(args.beta_1), 
+    float(args.beta_T), 
+    args.T, 
+    args.img_size, 
+    args.mean_type, 
+    args.var_type).to(device)
+
     
     if args.parallel:
         trainer = torch.nn.DataParallel(trainer)

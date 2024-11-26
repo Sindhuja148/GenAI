@@ -1,0 +1,74 @@
+{
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.10.0",
+    "heartbeatAt": "2024-11-26T15:21:28.951563",
+    "startedAt": "2024-11-26T15:21:27.625413",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--train",
+        "--dataset=mnist",
+        "--beta_1=1e-4",
+        "--beta_T=0.02",
+        "--img_size=16",
+        "--timestep=4",
+        "--img_ch=1",
+        "--parallel=True",
+        "--sample_step=0",
+        "--logdir=./logsMNISTSAMPLE",
+        "--wandb",
+        "--eval",
+        "--num_images=5000",
+        "--batch_size=4",
+        "--save_step=1000",
+        "--ch=64",
+        "--total_steps=5",
+        "--num_workers=0",
+        "--T=100",
+        "--expo_schedule"
+    ],
+    "state": "running",
+    "program": "C:\\Users\\HP\\Documents\\Gen-Ai\\Spikking Neural Networks\\SDDPM\\main_SDDPM.py",
+    "codePathLocal": "main_SDDPM.py",
+    "codePath": "SDDPM\\main_SDDPM.py",
+    "git": {
+        "remote": "https://github.com/Sindhuja148/GenAI.git",
+        "commit": "4f23604ca24407358f3bbfe44dc35386d847011f"
+    },
+    "email": "guptagagan25092003@gmail.com",
+    "root": "C:/Users/HP/Documents/Gen-Ai/Spikking Neural Networks",
+    "host": "SkyCoder-DESKTOP",
+    "username": "HP",
+    "executable": "C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 3301.0,
+        "min": 0.0,
+        "max": 3301.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3301.0,
+            "min": 0.0,
+            "max": 3301.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 476.06737899780273,
+            "used": 265.37298583984375
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 7.345554351806641
+    }
+}

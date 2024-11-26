@@ -1,0 +1,25 @@
+-------Starting loading mnist Dataset!-------
+Training from scratch
+epsilon
+Model params: 15.89 M
+  0%|                                                                                                                                      | 0/5 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 363, in <module>
+    main()
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 354, in main
+    train()
+  File "C:\Users\HP\Documents\Gen-Ai\Spikking Neural Networks\SDDPM\main_SDDPM.py", line 247, in train
+    loss = trainer(x_0.float()).mean()
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\modules\module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\modules\module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\parallel\data_parallel.py", line 183, in forward
+    return self.module(*inputs[0], **module_kwargs[0])
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\modules\module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\modules\module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\nn\modules\module.py", line 372, in _forward_unimplemented
+    raise NotImplementedError(f"Module [{type(self).__name__}] is missing the required \"forward\" function")
+NotImplementedError: Module [GaussianDiffusionTrainer] is missing the required "forward" function
