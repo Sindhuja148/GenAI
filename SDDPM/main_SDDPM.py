@@ -20,6 +20,7 @@ from diffusion import GaussianDiffusionTrainer,GaussianDiffusionSampler,LatentGa
 from model import Spk_UNet
 from score.both import get_inception_and_fid_score
 
+
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3,4,5,6,7,8"
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 ## argument parsing ##
@@ -77,6 +78,27 @@ args = parser.parse_args()
 
 
 device = torch.device('cuda:0')
+
+
+def upscale_images_torch(batch_images):
+    """
+    Upscale a batch of images from 16x16 to 32x32 using PyTorch.
+    Args:
+        batch_images (torch.Tensor): Tensor of shape (batch_size, channels, height, width).
+    Returns:
+        torch.Tensor: Tensor of shape (batch_size, channels, 32, 32).
+    """
+    # Ensure the input tensor has shape (batch_size, channels, height, width)
+    if batch_images.ndim != 4:
+        raise ValueError("Input tensor must have shape (batch_size, channels, height, width)")
+
+    # Use bicubic interpolation to upscale the images
+    return F.interpolate(batch_images, size=(32, 32), mode='bicubic', align_corners=False)
+
+# Example usage
+# Assume `images` is a NumPy array of shape (batch_size, 16, 16, 3)
+# upscaled_images = upscale_images_pil(images)
+
 
 
 def seed_everything(seed_value):
@@ -332,6 +354,10 @@ def eval():
             batch_size = min(args.batch_size, args.num_images - i)
             x_T = torch.randn((batch_size, int(args.img_ch), int(args.img_size), int(args.img_size)))
             batch_images = sampler(x_T.to(device))
+            if batch_images.shape[1] == 1:
+                batch_images = batch_images.repeat(1, 3, 1, 1)
+            if batch_images.shape[2] == 16:
+                batch_images = upscale_images_torch(batch_images=batch_images)
             batch_images = batch_images.cpu()
             images.append((batch_images + 1) / 2)           
         images = torch.cat(images, dim=0).numpy()
